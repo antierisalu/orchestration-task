@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: billing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: billing
+  template:
+    metadata:
+      labels:
+        app: billing
+    spec:
+      containers:
+      - name: billing
+        image: antikaz/orcs:billing
+        ports:
+          - containerPort: 5000
+        envFrom:
+          - secretRef:
+              name: billing-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: billing
+spec:
+  selector:
+    app: billing
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+

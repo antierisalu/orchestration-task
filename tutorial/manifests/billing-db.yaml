@@ -1,0 +1,37 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: billing-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: billing-db
+  template:
+    metadata:
+      labels:
+        app: billing-db
+    spec:
+      containers:
+        - name: billing-db
+          image: antikaz/orcs:billing-db
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: billing-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: billing-db
+spec:
+  selector:
+    app: billing-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+

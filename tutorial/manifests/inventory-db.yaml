@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-db
+  template:
+    metadata:
+      labels:
+        app: inventory-db
+    spec:
+      containers:
+        - name: inventory-db
+          image: antikaz/orcs:inventory-db
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: inventory-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-db
+spec:
+  selector:
+    app: inventory-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+
