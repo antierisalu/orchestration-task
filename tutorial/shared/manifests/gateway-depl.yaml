@@ -1,52 +1,53 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: inventory
+  name: gateway
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: inventory
+      app: gateway
   template:
     metadata:
       labels:
-        app: inventory
+        app: gateway
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: agent-node
+      # nodeSelector:
+      #   kubernetes.io/hostname: k3s-agent
       containers:
-      - name: inventory
-        image: antikaz/orcs:inventory2
+      - name: gateway
+        image: antikaz/orcs:gateway
         ports:
-          - containerPort: 8080
+          - containerPort: 3000
         envFrom:
           - secretRef:
-              name: inventory-secret
+              name: gateway-secret
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: inventory-svc
+  name: gateway
 spec:
   type: LoadBalancer
   selector:
-    app: inventory
+    app: gateway
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 3000
+      targetPort: 3000
+      nodePort: 30000
 
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: inventory-hpa
+  name: gateway-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: inventory
+    name: gateway
   minReplicas: 1
   maxReplicas: 3
   targetCPUUtilizationPercentage: 60

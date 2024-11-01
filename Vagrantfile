@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
       apt-get update -y
       echo "$IP_NW$((IP_START)) master-node" >> /etc/hosts
       echo "$IP_NW$((IP_START+1)) worker-node01" >> /etc/hosts
+      echo "$IP_NW$((IP_START+1)) worker-node02" >> /etc/hosts
   SHELL
 
   config.vm.box = "ubuntu/focal64"
@@ -18,7 +19,7 @@ Vagrant.configure("2") do |config|
     master.vm.network "private_network", ip: IP_NW + "#{IP_START}"
     master.vm.provider "virtualbox" do |vb|
         vb.memory = 4048
-        vb.cpus = 2
+        vb.cpus = 4
     end
     master.vm.provision "shell", path: "scripts/common.sh"
     master.vm.provision "shell", path: "scripts/master.sh"
@@ -31,7 +32,7 @@ Vagrant.configure("2") do |config|
     node.vm.network "private_network", ip: IP_NW + "#{IP_START + i}"
     node.vm.provider "virtualbox" do |vb|
         vb.memory = 2048
-        vb.cpus = 1
+        vb.cpus = 2
     end
     node.vm.provision "shell", path: "scripts/common.sh"
     node.vm.provision "shell", path: "scripts/node.sh"

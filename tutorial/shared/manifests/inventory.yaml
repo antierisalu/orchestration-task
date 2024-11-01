@@ -12,8 +12,8 @@ spec:
       labels:
         app: inventory
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: agent-node
+      # nodeSelector:
+      #   kubernetes.io/hostname: agent-node
       containers:
       - name: inventory
         image: antikaz/orcs:inventory2

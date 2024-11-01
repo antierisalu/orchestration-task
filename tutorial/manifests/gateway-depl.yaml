@@ -12,8 +12,8 @@ spec:
       labels:
         app: gateway
     spec:
-      # nodeSelector:
-      #   kubernetes.io/hostname: master-node
+      nodeSelector:
+        kubernetes.io/hostname: master-node
       containers:
       - name: gateway
         image: antikaz/orcs:gateway
@@ -22,13 +22,6 @@ spec:
         envFrom:
           - secretRef:
               name: gateway-secret
-        # resources:
-        #   requests:
-        #     cpu: "300m"
-        #     memory: "256Mi"
-        #   limits:
-        #     cpu: "800m"
-        #     memory: "512Mi"
 
 ---
 apiVersion: v1

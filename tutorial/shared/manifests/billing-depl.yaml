@@ -12,8 +12,8 @@ spec:
       labels:
         app: billing
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: agent-node
+      # nodeSelector:
+      #   kubernetes.io/hostname: k3s-agent
       containers:
       - name: billing
         image: antikaz/orcs:billing

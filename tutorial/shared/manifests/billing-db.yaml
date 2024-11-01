@@ -1,34 +1,34 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: inventory-db
+  name: billing-db
 spec:
-  serviceName: "inventory-db"
+  serviceName: "billing-db"
   replicas: 1
   selector:
     matchLabels:
-      app: inventory-db
+      app: billing-db
   template:
     metadata:
       labels:
-        app: inventory-db
+        app: billing-db
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: agent-node
+      # nodeSelector:
+      #   kubernetes.io/hostname: k3s-agent
       containers:
-        - name: inventory-db
-          image: antikaz/orcs:inventory-db
+        - name: billing-db
+          image: antikaz/orcs:billing-db
           ports:
             - containerPort: 5432
           volumeMounts:
-            - name: inventory-db-storage
+            - name: billing-db-storage
               mountPath: /var/lib/postgresql/data
           envFrom:
             - secretRef:
-                name: inventory-secret
+                name: billing-secret
   volumeClaimTemplates:
     - metadata:
-        name: inventory-db-storage
+        name: billing-db-storage
       spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
@@ -39,10 +39,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: inventory-db
+  name: billing-db
 spec:
   selector:
-    app: inventory-db
+    app: billing-db
   ports:
     - protocol: TCP
       port: 5432

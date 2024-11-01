@@ -12,3 +12,23 @@ TOKEN=$(sudo cat /var/lib/rancher/k3s/server/node-token)
 
 # Store the token for the workers to use
 echo $TOKEN > /vagrant/token
+
+
+# apiVersion: v1
+# clusters:
+# - cluster:
+#     certificate-authority-data: MEGAPIKKKEY
+#     server: https://127.0.0.1:6443
+#   name: default
+# contexts:
+# - context:
+#     cluster: default
+#     user: default
+#   name: default
+# current-context: default
+# kind: Config
+# preferences: {}
+# users:
+# - name: default
+#   user:
+#     token: MEGAPIKKKEYjälle
