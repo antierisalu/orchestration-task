@@ -1,13 +1,16 @@
 #!/bin/bash
 
-HOST=" master.example.com"
-COUNT=5
-IFACE="enp0s8"
+# Installing k3s agent
 
-# Ping the host for the specified count
-for ((i=1; i<=$COUNT; i++))
-do
-  ping -c 1 $HOST -I $IFACE
-done
+HOST="https://192.168.57.10:6443"
+TOKEN=$(cat /vagrant/node-token)
 
-sudo bash /vagrant/join-worker.sh
+echo $HOST
+echo $TOKEN
+
+curl -sfL https://get.k3s.io | K3S_NODE_NAME=agent K3S_URL=$HOST K3S_TOKEN=$TOKEN sh - 
+
+
+# sudo journalctl -u k3s -f
+# sudo /usr/local/bin/k3s-agent-uninstall.sh
+# curl -sfL https://get.k3s.io | K3S_NODE_NAME=agent K3S_URL=$HOST K3S_TOKEN=$TOKEN sh -

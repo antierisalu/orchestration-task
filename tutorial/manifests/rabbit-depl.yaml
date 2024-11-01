@@ -12,6 +12,8 @@ spec:
       labels:
         app: rabbitmq
     spec:
+      # nodeSelector:
+      #   kubernetes.io/hostname: agent-node
       containers:
       - name: rabbitmq
         image: antikaz/orcs:rabbitmq5

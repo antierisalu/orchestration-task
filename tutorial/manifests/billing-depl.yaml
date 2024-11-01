@@ -12,6 +12,8 @@ spec:
       labels:
         app: billing
     spec:
+      # nodeSelector:
+      #   kubernetes.io/hostname: agent-node
       containers:
       - name: billing
         image: antikaz/orcs:billing
@@ -20,6 +22,13 @@ spec:
         envFrom:
           - secretRef:
               name: billing-secret
+        # resources:
+        #   requests:
+        #     cpu: "300m"
+        #     memory: "256Mi"
+        #   limits:
+        #     cpu: "800m"
+        #     memory: "512Mi"
 
 ---
 apiVersion: v1
