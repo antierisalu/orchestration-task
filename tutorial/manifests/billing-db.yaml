@@ -13,8 +13,8 @@ spec:
       labels:
         app: billing-db
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: agent-node
+      # nodeSelector:
+      #   kubernetes.io/hostname: agent-node
       containers:
         - name: billing-db
           image: antikaz/orcs:billing-db

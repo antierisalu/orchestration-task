@@ -13,8 +13,8 @@ spec:
       labels:
         app: inventory-db
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: agent-node
+      # nodeSelector:
+      #   kubernetes.io/hostname: agent-node
       containers:
         - name: inventory-db
           image: antikaz/orcs:inventory-db

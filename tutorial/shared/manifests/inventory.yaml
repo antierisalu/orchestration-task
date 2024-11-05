@@ -12,8 +12,10 @@ spec:
       labels:
         app: inventory
     spec:
-      # nodeSelector:
-      #   kubernetes.io/hostname: agent-node
+      initContainers:
+      - name: wait-for-inventory-db
+        image: busybox
+        command: ['sh', '-c', 'until nc -z -v -w30 inventory-db.default.svc.cluster.local 5432; do echo waiting for inventory-db; sleep 5; done;']
       containers:
       - name: inventory
         image: antikaz/orcs:inventory2
@@ -27,7 +29,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: inventory-svc
+  name: inventory
 spec:
   type: LoadBalancer
   selector:

@@ -13,9 +13,7 @@ spec:
       labels:
         app: billing-db
     spec:
-      # nodeSelector:
-      #   kubernetes.io/hostname: k3s-agent
-      containers:
+        containers:
         - name: billing-db
           image: antikaz/orcs:billing-db
           ports:
