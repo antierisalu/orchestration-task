@@ -1,6 +1,6 @@
 ## Orchestration-task
 
-This task taught how to deploy multiple applications with two different persistent databases to kubernetes.
+This task taught about concepts of kubernetes and how to deploy multiple applications with two different persistent databases with K3s.
 
 #### Prerequisites
 
@@ -87,15 +87,21 @@ Kubernetes controller that provides declarative updates to applications. It mana
 
 * ##### What is the difference between deployment and StatefulSet in K8s?
 
-* #### Deployment:
-* Used for stateless applications.
-* Pods are interchangeable and do not require stable network identities.
-* Scaling and updates are straightforward, with no guarantees about the order of pod creation or deletion.
-* #### StatefulSet:
+* Deployment:
 
-* Used for stateful applications.
-* Each pod has a unique, stable network identity and persistent storage.
-* Provides guarantees about the ordering and uniqueness of pods, ensuring that pods are created, updated, and deleted in a specific order.
+Used for stateless applications.
+
+Pods are interchangeable and do not require stable network identities.
+
+Scaling and updates are straightforward, with no guarantees about the order of pod creation or deletion.
+
+* StatefulSet:
+
+Used for stateful applications.
+
+Each pod has a unique, stable network identity and persistent storage.
+
+Provides guarantees about the ordering and uniqueness of pods, ensuring that pods are created, updated, and deleted in a specific order.
 
 * ##### What is scaling, and why do we use it?
 
