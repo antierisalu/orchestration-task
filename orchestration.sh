@@ -33,15 +33,14 @@ case $1 in
         if kubectl get deployments.apps | grep -q "gateway"; then
             echo "Deployments are already up. Skipping apply commands."
         else
-            echo "Applying secrets"
-            kubectl apply -f shared/sec
-            sleep 1
-            echo "Applying manifests"
-            kubectl apply -f shared/manifests
+            echo "Applying secrets and manifests"
+            kubectl apply -f shared/sec && kubectl apply -R -f shared/manifests/
+            echo "\n"
             echo "Usually within two minutes pods should be running, check the status with:"
+            echo "\n"
             echo "kubectl get pods"
         fi
-
+        
         kubectl get pods -o wide
         echo "check pods status again running 'kubectl get pods'"
         exit 0
